@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'com.github.ben-manes.versions' version '0.46.0'
+    id 'checkstyle'
 }
 
 group = 'hexlet.code'
@@ -25,4 +26,8 @@ compileJava {
 
 application {
     mainClass = 'hexlet.code.App'
+}
+
+checkstyle {
+    toolVersion = '10.3.3'
 }
