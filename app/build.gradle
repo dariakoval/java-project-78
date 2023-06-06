@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'com.github.ben-manes.versions' version '0.46.0'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'hexlet.code'
@@ -30,4 +31,10 @@ application {
 
 checkstyle {
     toolVersion = '10.3.3'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
 }
