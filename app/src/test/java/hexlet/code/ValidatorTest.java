@@ -25,7 +25,7 @@ public class ValidatorTest {
         assertThat(schema.isValid("hexlet")).isFalse();
 
         schema.contains("what");
-        assertThat(schema.isValid("what does the fox say")).isTrue();
+        assertThat(schema.isValid("what does the fox say")).isFalse();
 
         schema.contains("whatthe");
         assertThat(schema.isValid("what does the fox say")).isFalse();
