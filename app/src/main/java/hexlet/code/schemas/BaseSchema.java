@@ -10,7 +10,7 @@ public abstract class BaseSchema {
 
     @SuppressWarnings("unchecked")
     public boolean isValid(Object obj) {
-        List<Integer> list = (List) obj;
+        List<Integer> list = (List<Integer>) obj;
         int sum = 0;
 
         for (Integer item: list) {

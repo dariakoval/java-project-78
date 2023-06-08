@@ -9,63 +9,80 @@ import java.util.Map;
 
 public class NumberSchema  extends BaseSchema {
     private Validator validator;
-    private Map<String, Object> map;
+    private Map<String, Object> mapRules;
+    private List<Integer> total;
 
     public NumberSchema(Validator validator) {
         this.validator = validator;
-        map = new HashMap<>();
-        map.put("required", null);
-        map.put("positive", null);
-        map.put("beginRange", null);
-        map.put("endRange", null);
-
+        mapRules = new HashMap<>();
+        total = new ArrayList<>();
     }
 
     public NumberSchema required() {
-        map.put("required", true);
+        mapRules.put("required", true);
         return this;
     }
 
     public NumberSchema positive() {
-        map.put("positive", true);
+        mapRules.put("positive", true);
         return this;
     }
 
     public NumberSchema range(int begin, int end) {
-        map.put("beginRange", begin);
-        map.put("endRange", end);
+        mapRules.put("beginRange", begin);
+        mapRules.put("endRange", end);
         return this;
     }
 
-    public boolean isValid(Object obj) {
-        if (obj instanceof Integer) {
-            List<String> fieldCount = new ArrayList<>();
-            List<Boolean> correctChecks = new ArrayList<>();
-
-            map.entrySet().stream()
-                    .filter(x -> x.getValue() != null)
-                    .forEach(x -> {
-                        fieldCount.add(x.getKey());
-                        if (x.getKey().equals("positive")) {
-                            if ((Integer) obj > 0) {
-                                correctChecks.add(true);
-                            }
-                        }
-                        if (x.getKey().equals("beginRange")) {
-                            if ((Integer) obj >= (Integer) x.getValue()) {
-                                correctChecks.add(true);
-                            }
-                        }
-                        if (x.getKey().equals("endRange")) {
-                            if ((Integer) obj <= (Integer) x.getValue()) {
-                                correctChecks.add(true);
-                            }
-                        }
-                    });
-            return fieldCount.size() == correctChecks.size();
-        } else if (obj == null && map.get("required") == null) {
-            return true;
+    public void validationPositive(Object obj) {
+        if (obj == null && !mapRules.containsKey("required")) {
+            total.add(1);
+        } else if (obj != null && (Integer) obj > 0) {
+            total.add(1);
+        } else {
+            total.add(0);
         }
-        return false;
+    }
+
+    public void validationRange(Object obj) {
+        if (obj == null) {
+            total.add(0);
+        } else if ((Integer) obj >= (Integer) mapRules.get("beginRange")
+                && (Integer) obj <= (Integer) mapRules.get("endRange")) {
+            total.add(1);
+        } else {
+            total.add(0);
+        }
+    }
+
+    public void validationRequired(Object obj) {
+        if (obj == null) {
+            total.add(0);
+        } else {
+            total.add(1);
+        }
+    }
+
+    public boolean isValid(Object obj) {
+        if ((obj instanceof Integer || obj == null) && mapRules.isEmpty()) {
+            total.add(1);
+        } else if (obj instanceof Integer || obj == null) {
+            for (String key: mapRules.keySet()) {
+                if (key.equals("positive")) {
+                    validationPositive(obj);
+                }
+                if (key.equals("required")) {
+                    validationRequired(obj);
+                }
+                if (key.equals("beginRange")) {
+                    validationRange(obj);
+                }
+            }
+        } else {
+            total.add(0);
+        }
+        var result = super.isValid(total);
+        total = new ArrayList<>();
+        return result;
     }
 }

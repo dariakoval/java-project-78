@@ -82,6 +82,8 @@ public class StringSchema extends BaseSchema {
             total.add(0);
         }
 
-        return super.isValid(total);
+        var result = super.isValid(total);
+        total = new ArrayList<>();
+        return result;
     }
 }
