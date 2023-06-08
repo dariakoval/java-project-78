@@ -6,69 +6,82 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema {
     private Validator validator;
-    private Map<String, Object> map;
+    private Map<String, Object> mapRules;
+    private List<Integer> total;
 
     public StringSchema(Validator validator) {
         this.validator = validator;
-        map = new HashMap<>();
-        map.put("required", null);
-        map.put("minLength", null);
-        map.put("contains", null);
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
+        mapRules = new HashMap<>();
+        total = new ArrayList<>();
     }
 
     public StringSchema required() {
-        map.put("required", true);
+        mapRules.put("required", true);
         return this;
     }
 
     public StringSchema minLength(int number) {
-        map.put("minLength", number);
+        mapRules.put("minLength", number);
         return this;
     }
 
     public StringSchema contains(String substring) {
-        map.put("contains", substring);
+        mapRules.put("contains", substring);
         return this;
     }
 
-    public boolean isValid(Object obj) {
-        if (obj instanceof String) {
-            List<String> fieldCount = new ArrayList<>();
-            List<Boolean> correctChecks = new ArrayList<>();
-
-            map.entrySet().stream()
-                    .filter(x -> x.getValue() != null)
-                    .forEach(x -> {
-                        fieldCount.add(x.getKey());
-                        if (x.getKey().equals("contains")) {
-                            if (((String) obj).contains((String) x.getValue())) {
-                                correctChecks.add(true);
-                            }
-                        }
-                        if (x.getKey().equals("minLength")) {
-                            if (((String) obj).length() == (Integer) x.getValue()) {
-                                correctChecks.add(true);
-                            }
-                        }
-                        if (x.getKey().equals("required")) {
-                            if (!Objects.equals(obj, "")) {
-                                correctChecks.add(true);
-                            }
-                        }
-                    });
-
-            return fieldCount.size() == correctChecks.size();
-        } else if ((obj == null || Objects.equals(obj, "")) && map.get("required") == null) {
-            return true;
+    public void validationMinLength(Object obj) {
+        if (obj == null) {
+            total.add(0);
+        } else if (((String) obj).length() >= (Integer) mapRules.get("minLength")) {
+            total.add(1);
+        } else {
+            total.add(0);
         }
-        return false;
+    }
+
+    public void validationContains(Object obj) {
+        if (obj == null) {
+            total.add(0);
+        } else if (((String) obj).contains((String) mapRules.get("contains"))) {
+            total.add(1);
+        } else {
+            total.add(0);
+        }
+    }
+
+    public void validationRequired(Object obj) {
+        if (obj == null) {
+            total.add(0);
+        } else if (obj.equals("")) {
+            total.add(0);
+        } else {
+            total.add(1);
+        }
+    }
+
+    public boolean isValid(Object obj) {
+        if ((obj instanceof String || obj == null) && mapRules.isEmpty()) {
+            total.add(1);
+        } else if (obj instanceof String || obj == null) {
+            for (String key: mapRules.keySet()) {
+                if (key.equals("contains")) {
+                    validationContains(obj);
+                }
+                if (key.equals("minLength")) {
+                    validationMinLength(obj);
+                }
+                if (key.equals("required")) {
+                    validationRequired(obj);
+                }
+            }
+        } else {
+            total.add(0);
+        }
+
+        return super.isValid(total);
     }
 }
