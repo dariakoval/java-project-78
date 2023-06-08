@@ -45,7 +45,9 @@ public class NumberSchema  extends BaseSchema {
     }
 
     public void validationRange(Object obj) {
-        if (obj == null) {
+        if (obj == null && !mapRules.containsKey("required")) {
+            total.add(1);
+        } else if (obj == null) {
             total.add(0);
         } else if ((Integer) obj >= (Integer) mapRules.get("beginRange")
                 && (Integer) obj <= (Integer) mapRules.get("endRange")) {

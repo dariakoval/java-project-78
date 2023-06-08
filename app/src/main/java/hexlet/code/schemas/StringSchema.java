@@ -34,7 +34,9 @@ public class StringSchema extends BaseSchema {
     }
 
     public void validationMinLength(Object obj) {
-        if (obj == null) {
+        if (obj == null && !mapRules.containsKey("required")) {
+            total.add(1);
+        } else if (obj == null) {
             total.add(0);
         } else if (((String) obj).length() >= (Integer) mapRules.get("minLength")) {
             total.add(1);
@@ -44,7 +46,9 @@ public class StringSchema extends BaseSchema {
     }
 
     public void validationContains(Object obj) {
-        if (obj == null) {
+        if (obj == null && !mapRules.containsKey("required")) {
+            total.add(1);
+        } else if (obj == null) {
             total.add(0);
         } else if (((String) obj).contains((String) mapRules.get("contains"))) {
             total.add(1);
