@@ -6,7 +6,7 @@ public abstract class BaseSchema {
     public BaseSchema() {
     }
 
-    abstract BaseSchema required();
+    public abstract BaseSchema required();
 
     @SuppressWarnings("unchecked")
     public boolean isValid(Object obj) {
