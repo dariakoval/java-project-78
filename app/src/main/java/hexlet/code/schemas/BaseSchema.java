@@ -1,13 +1,9 @@
 package hexlet.code.schemas;
 
-import hexlet.code.Validator;
-
 import java.util.List;
 
 public class BaseSchema {
-    private final Validator validator;
-    public BaseSchema(Validator validator) {
-        this.validator = validator;
+    public BaseSchema() {
     }
 
     @SuppressWarnings("unchecked")

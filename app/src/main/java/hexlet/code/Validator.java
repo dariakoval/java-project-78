@@ -9,14 +9,14 @@ public final class Validator {
     }
 
     public StringSchema string() {
-        return new StringSchema(this);
+        return new StringSchema();
     }
 
     public NumberSchema number() {
-        return new NumberSchema(this);
+        return new NumberSchema();
     }
 
     public MapSchema map() {
-        return new MapSchema(this);
+        return new MapSchema();
     }
 }

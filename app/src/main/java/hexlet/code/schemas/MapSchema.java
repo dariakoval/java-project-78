@@ -1,7 +1,5 @@
 package hexlet.code.schemas;
 
-import hexlet.code.Validator;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +11,7 @@ public final class MapSchema extends BaseSchema {
     private Map<String, BaseSchema> schemas;
     private List<Integer> nestedList;
 
-    public MapSchema(Validator validator) {
-        super(validator);
+    public MapSchema() {
         mapRules = new HashMap<>();
         total = new ArrayList<>();
         nestedList = new ArrayList<>();
@@ -29,14 +26,6 @@ public final class MapSchema extends BaseSchema {
         mapRules.put("sizeof", number);
         return this;
     }
-
-//    public StringSchema string() {
-//        return validator.string();
-//    }
-//
-//    public NumberSchema number() {
-//        return validator.number();
-//    }
 
     public void shape(Map<String, BaseSchema> map) {
         mapRules.put("shape", true);

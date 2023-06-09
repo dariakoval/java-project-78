@@ -1,7 +1,5 @@
 package hexlet.code.schemas;
 
-import hexlet.code.Validator;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +9,7 @@ public final class NumberSchema  extends BaseSchema {
     private Map<String, Object> mapRules;
     private List<Integer> total;
 
-    public NumberSchema(Validator validator) {
-        super(validator);
+    public NumberSchema() {
         mapRules = new HashMap<>();
         total = new ArrayList<>();
     }
