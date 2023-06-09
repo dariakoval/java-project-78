@@ -1,10 +1,13 @@
 package hexlet.code.schemas;
 
+import lombok.experimental.ExtensionMethod;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ExtensionMethod(BaseSchema.class)
 public final class MapSchema extends BaseSchema {
     private Map<String, Object> mapRules;
     private List<Integer> total;
