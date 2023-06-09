@@ -8,7 +8,7 @@ public abstract class BaseSchema {
 
     abstract boolean isValid(Object obj);
     @SuppressWarnings("unchecked")
-    public boolean isValidTotal(Object obj) {
+    protected final boolean isValidTotal(Object obj) {
         List<Integer> list = (List<Integer>) obj;
         int sum = 0;
 
