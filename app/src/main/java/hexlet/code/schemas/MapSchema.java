@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
-    private final Validator validator;
+    public final Validator validator;
     private Map<String, Object> mapRules;
     private List<Integer> total;
     private Map<String, BaseSchema> schemas;
@@ -92,6 +92,7 @@ public final class MapSchema extends BaseSchema {
         return result;
     }
 
+    @Override
     public boolean isValid(Object obj) {
         if ((obj instanceof Map || obj == null) && mapRules.isEmpty()) {
             total.add(1);
