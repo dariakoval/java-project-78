@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapSchema extends BaseSchema {
-    private Validator validator;
+public final class MapSchema extends BaseSchema {
+    private final Validator validator;
     private Map<String, Object> mapRules;
     private List<Integer> total;
     private Map<String, BaseSchema> schemas;

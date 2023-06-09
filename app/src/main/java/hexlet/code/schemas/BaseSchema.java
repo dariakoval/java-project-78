@@ -9,7 +9,7 @@ public abstract class BaseSchema {
     public abstract BaseSchema required();
 
     @SuppressWarnings("unchecked")
-    public boolean isValid(Object obj) {
+    protected boolean isValid(Object obj) {
         List<Integer> list = (List<Integer>) obj;
         int sum = 0;
 
