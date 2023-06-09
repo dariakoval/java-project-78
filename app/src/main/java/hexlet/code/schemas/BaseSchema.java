@@ -2,12 +2,13 @@ package hexlet.code.schemas;
 
 import java.util.List;
 
-public class BaseSchema {
+public abstract class BaseSchema {
     public BaseSchema() {
     }
 
+    abstract boolean isValid(Object obj);
     @SuppressWarnings("unchecked")
-    protected boolean isValid(Object obj) {
+    public boolean isValidTotal(Object obj) {
         List<Integer> list = (List<Integer>) obj;
         int sum = 0;
 

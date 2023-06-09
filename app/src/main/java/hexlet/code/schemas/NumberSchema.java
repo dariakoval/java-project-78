@@ -1,13 +1,10 @@
 package hexlet.code.schemas;
 
-import lombok.experimental.ExtensionMethod;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ExtensionMethod(BaseSchema.class)
 public final class NumberSchema  extends BaseSchema {
     private Map<String, Object> mapRules;
     private List<Integer> total;
@@ -83,7 +80,7 @@ public final class NumberSchema  extends BaseSchema {
         } else {
             total.add(0);
         }
-        var result = super.isValid(total);
+        var result = super.isValidTotal(total);
         total = new ArrayList<>();
         return result;
     }
