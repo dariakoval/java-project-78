@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public final class NumberSchema  extends BaseSchema {
-    public final Validator validator;
     private Map<String, Object> mapRules;
     private List<Integer> total;
 
     public NumberSchema(Validator validator) {
-        this.validator = validator;
+        super(validator);
         mapRules = new HashMap<>();
         total = new ArrayList<>();
     }

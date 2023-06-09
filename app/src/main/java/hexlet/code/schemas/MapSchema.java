@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
-    public final Validator validator;
     private Map<String, Object> mapRules;
     private List<Integer> total;
     private Map<String, BaseSchema> schemas;
     private List<Integer> nestedList;
 
     public MapSchema(Validator validator) {
-        this.validator = validator;
+        super(validator);
         mapRules = new HashMap<>();
         total = new ArrayList<>();
         nestedList = new ArrayList<>();
@@ -31,13 +30,13 @@ public final class MapSchema extends BaseSchema {
         return this;
     }
 
-    public StringSchema string() {
-        return validator.string();
-    }
-
-    public NumberSchema number() {
-        return validator.number();
-    }
+//    public StringSchema string() {
+//        return validator.string();
+//    }
+//
+//    public NumberSchema number() {
+//        return validator.number();
+//    }
 
     public void shape(Map<String, BaseSchema> map) {
         mapRules.put("shape", true);

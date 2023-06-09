@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public final class StringSchema extends BaseSchema {
-    public final Validator validator;
     private Map<String, Object> mapRules;
     private List<Integer> total;
 
     public StringSchema(Validator validator) {
-        this.validator = validator;
+        super(validator);
         mapRules = new HashMap<>();
         total = new ArrayList<>();
     }
