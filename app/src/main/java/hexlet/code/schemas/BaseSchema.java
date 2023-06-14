@@ -1,22 +1,21 @@
 package hexlet.code.schemas;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public abstract class BaseSchema {
-    public BaseSchema() {
+    private final Map<String, Predicate<Object>> checks;
+
+    protected BaseSchema() {
+        this.checks = new HashMap<>();
     }
 
-    abstract boolean isValid(Object obj);
-    @SuppressWarnings("unchecked")
-    protected final boolean isValidTotal(Object obj) {
-        List<Integer> list = (List<Integer>) obj;
-        int sum = 0;
+    protected final void addCheck(String name, Predicate<Object> check) {
+        checks.put(name, check);
+    }
 
-        for (Integer item: list) {
-            sum += item;
-        }
-
-        int length = list.size();
-        return sum == length;
+    public final boolean isValid(Object object) {
+        return checks.values().stream().allMatch(check -> check.test(object));
     }
 }

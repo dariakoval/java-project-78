@@ -1,87 +1,24 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 public final class NumberSchema  extends BaseSchema {
-    private Map<String, Object> mapRules;
-    private List<Integer> total;
-
     public NumberSchema() {
-        mapRules = new HashMap<>();
-        total = new ArrayList<>();
+        addCheck("number", value -> value instanceof Integer || value == null);
     }
 
     public NumberSchema required() {
-        mapRules.put("required", true);
+        addCheck("required", Objects::nonNull);
         return this;
     }
 
     public NumberSchema positive() {
-        mapRules.put("positive", true);
+        addCheck("positive", value -> value == null || ((int) value) > 0);
         return this;
     }
 
     public NumberSchema range(int begin, int end) {
-        mapRules.put("beginRange", begin);
-        mapRules.put("endRange", end);
+        addCheck("range", value -> value == null || ((int) value) >= begin && ((int) value) <= end);
         return this;
-    }
-
-    public void validationPositive(Object obj) {
-        if (obj == null && !mapRules.containsKey("required")) {
-            total.add(1);
-        } else if (obj != null && (Integer) obj > 0) {
-            total.add(1);
-        } else {
-            total.add(0);
-        }
-    }
-
-    public void validationRange(Object obj) {
-        if (obj == null && !mapRules.containsKey("required")) {
-            total.add(1);
-        } else if (obj == null) {
-            total.add(0);
-        } else if ((Integer) obj >= (Integer) mapRules.get("beginRange")
-                && (Integer) obj <= (Integer) mapRules.get("endRange")) {
-            total.add(1);
-        } else {
-            total.add(0);
-        }
-    }
-
-    public void validationRequired(Object obj) {
-        if (obj == null) {
-            total.add(0);
-        } else {
-            total.add(1);
-        }
-    }
-
-    @Override
-    public boolean isValid(Object obj) {
-        if ((obj instanceof Integer || obj == null) && mapRules.isEmpty()) {
-            total.add(1);
-        } else if (obj instanceof Integer || obj == null) {
-            for (String key: mapRules.keySet()) {
-                if (key.equals("positive")) {
-                    validationPositive(obj);
-                }
-                if (key.equals("required")) {
-                    validationRequired(obj);
-                }
-                if (key.equals("beginRange")) {
-                    validationRange(obj);
-                }
-            }
-        } else {
-            total.add(0);
-        }
-        var result = super.isValidTotal(total);
-        total = new ArrayList<>();
-        return result;
     }
 }
