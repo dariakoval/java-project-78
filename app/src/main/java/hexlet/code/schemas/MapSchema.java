@@ -19,7 +19,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema sizeof(int number) {
-        addCheck("sizeof", value -> value == null || ((Map) value).size() == number);
+        addCheck("sizeof", value -> ((Map) value).size() == number);
         return this;
     }
 

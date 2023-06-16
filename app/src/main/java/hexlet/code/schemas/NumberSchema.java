@@ -17,12 +17,12 @@ public final class NumberSchema  extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        addCheck("positive", value -> value == null || ((int) value) > 0);
+        addCheck("positive", value -> ((int) value) > 0);
         return this;
     }
 
     public NumberSchema range(int begin, int end) {
-        addCheck("range", value -> value == null || ((int) value) >= begin && ((int) value) <= end);
+        addCheck("range", value -> ((int) value) >= begin && ((int) value) <= end);
         return this;
     }
 }
