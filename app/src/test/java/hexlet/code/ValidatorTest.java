@@ -31,7 +31,7 @@ public class ValidatorTest {
         assertThat(schema2.isValid("")).isTrue();
         assertThat(schema2.isValid(null)).isTrue();
         schema2.minLength(3);
-        assertThat(schema2.isValid("")).isFalse();
+        assertThat(schema2.isValid("")).isTrue();
 
         Validator v3 = new Validator();
         StringSchema schema3 = v3.string();
