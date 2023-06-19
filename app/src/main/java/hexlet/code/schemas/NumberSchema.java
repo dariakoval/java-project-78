@@ -1,18 +1,12 @@
 package hexlet.code.schemas;
 
 public final class NumberSchema  extends BaseSchema {
-    private boolean required = false;
-
     public NumberSchema() {
-        addCheck("required", value -> value instanceof Integer);
-    }
-
-    public boolean isRequired() {
-        return required;
+        addCheck("required", value -> value instanceof Integer || value == null);
     }
 
     public NumberSchema required() {
-        required = true;
+        setRequired();
         return this;
     }
 

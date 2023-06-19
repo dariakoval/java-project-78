@@ -1,20 +1,18 @@
 package hexlet.code.schemas;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
-    private boolean required = false;
+    private Map<String, BaseSchema> valuesChecks;
 
     public MapSchema() {
-        addCheck("required", value -> value instanceof Map);
-    }
-
-    public boolean isRequired() {
-        return required;
+        this.valuesChecks = new HashMap<>();
+        addCheck("required", value -> value instanceof Map || value == null);
     }
 
     public MapSchema required() {
-        required = true;
+        setRequired();
         return this;
     }
 
@@ -25,8 +23,18 @@ public final class MapSchema extends BaseSchema {
 
     @SuppressWarnings("unchecked")
     public MapSchema shape(Map<String, BaseSchema> schemas) {
-        addCheck("shape", value -> (schemas.get("name").isValid(((Map<String, Object>) value).get("name"))
-                    && schemas.get("age").isValid(((Map<String, Object>) value).get("age"))));
+        this.valuesChecks = schemas;
+        addCheck("shape", value -> checkMapValues((Map<String, Object>) value));
         return this;
+    }
+
+    public boolean checkMapValues(Map<String, Object> map) {
+        StringSchema stringSchema = (StringSchema) valuesChecks.get("name");
+        boolean isValidName = stringSchema.isValid(map.get("name"));
+
+        NumberSchema numberSchema = (NumberSchema) valuesChecks.get("age");
+        boolean isValidAge = numberSchema.isValid(map.get("age"));
+
+        return isValidName && isValidAge;
     }
 }
