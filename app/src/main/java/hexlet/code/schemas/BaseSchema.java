@@ -26,16 +26,15 @@ public abstract class BaseSchema {
     }
 
     public final boolean isValid(Object object) {
-        if (object == null && !isRequired()) {
-            return true;
-        } else if (object == null) {
-            return false;
-        } else if (Objects.equals(object, "") && checks.get("required").test(object) && !isRequired()) {
-            return true;
-        } else if (Objects.equals(object, "") && checks.get("required").test(object) && isRequired()) {
-            return false;
-        } else {
-            return checks.values().stream().allMatch(check -> check.test(object));
+        if (checks.get("required").test(object)) {
+            if ((object == null || Objects.equals(object, "")) && !isRequired()) {
+                return true;
+            } else if ((object == null || Objects.equals(object, "")) && isRequired()) {
+                return false;
+            } else {
+                return checks.values().stream().allMatch(check -> check.test(object));
+            }
         }
+        return false;
     }
 }
