@@ -1,8 +1,8 @@
 package hexlet.code.schemas;
 
-public final class NumberSchema  extends BaseSchema {
+public final class NumberSchema extends BaseSchema {
     public NumberSchema() {
-        addCheck("required", value -> value instanceof Integer || value == null);
+        addCheck("required", value -> value instanceof Integer);
     }
 
     public NumberSchema required() {
