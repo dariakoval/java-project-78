@@ -14,11 +14,11 @@ public abstract class BaseSchema {
         this.checks = new HashMap<>();
     }
 
-    public boolean isStringSchema() {
+    public final boolean isStringSchema() {
         return stringSchema;
     }
 
-    public void setStringSchema() {
+    public final void setStringSchema() {
         this.stringSchema = true;
     }
 
