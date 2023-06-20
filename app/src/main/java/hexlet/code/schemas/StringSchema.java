@@ -2,7 +2,8 @@ package hexlet.code.schemas;
 
 public final class StringSchema extends BaseSchema {
     public StringSchema() {
-        addCheck("required", value -> value instanceof String);
+        addCheck("required", value -> value instanceof String && !((String) value).isEmpty());
+        setStringSchema();
     }
 
     public StringSchema required() {

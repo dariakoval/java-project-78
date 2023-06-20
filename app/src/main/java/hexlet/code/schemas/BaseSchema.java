@@ -6,11 +6,20 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema {
+    private boolean stringSchema = false;
     private boolean required = false;
     private final Map<String, Predicate<Object>> checks;
 
     protected BaseSchema() {
         this.checks = new HashMap<>();
+    }
+
+    public boolean isStringSchema() {
+        return stringSchema;
+    }
+
+    public void setStringSchema() {
+        this.stringSchema = true;
     }
 
     protected final boolean isRequired() {
@@ -26,11 +35,11 @@ public abstract class BaseSchema {
     }
 
     public final boolean isValid(Object object) {
-        if ((object == null || Objects.equals(object, "")) && !isRequired()) {
+        if (object == null && !isRequired()) {
             return true;
-        }
-
-        if (checks.get("required").test(object) && !Objects.equals(object, "")) {
+        } else if (Objects.equals(object, "") && isStringSchema() && !isRequired()) {
+            return true;
+        } else if (checks.get("required").test(object)) {
             return checks.values().stream().allMatch(check -> check.test(object));
         }
 
