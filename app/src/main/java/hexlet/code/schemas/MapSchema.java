@@ -8,7 +8,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema required() {
-        setRequired();
+        required = true;
         return this;
     }
 
