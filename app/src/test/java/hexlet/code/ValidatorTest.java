@@ -28,8 +28,8 @@ public class ValidatorTest {
         StringSchema schema2 = v2.string();
         assertThat(schema2.isValid("")).isTrue();
         assertThat(schema2.isValid(null)).isTrue();
-//        schema2.minLength(3);
-        assertThat(schema2.isValid("")).isTrue();
+        schema2.minLength(3);
+        assertThat(schema2.isValid("")).isFalse();
 
         Validator v3 = new Validator();
         StringSchema schema3 = v3.string();
@@ -63,14 +63,14 @@ public class ValidatorTest {
 
         schema1.positive();
         assertThat(schema1.isValid(null)).isTrue();
-        assertThat(schema1.isValid(-4)).isTrue();
+        assertThat(schema1.isValid(-4)).isFalse();
 
         Validator v2 = new Validator();
         NumberSchema schema2 = v2.number();
 
         schema2.range(1, 9);
         assertThat(schema2.isValid(null)).isTrue();
-        assertThat(schema2.isValid(-1)).isTrue();
+        assertThat(schema2.isValid(-1)).isFalse();
         assertThat(schema2.isValid(6)).isTrue();
 
         Validator v3 = new Validator();
@@ -149,40 +149,12 @@ public class ValidatorTest {
         Map<String, Object> human4 = new HashMap<>();
         human4.put("name", "Valya");
         human4.put("age", -5);
-//        assertThat(schema.isValid(human4)).isFalse();
+        assertThat(schema.isValid(human4)).isFalse();
 
         schema.sizeof(2);
-//        assertThat(schema.isValid(human4)).isFalse();
+        assertThat(schema.isValid(human4)).isFalse();
 
         schema.required();
-//        assertThat(schema.isValid(human4)).isFalse();
-    }
-
-    @Test
-    public void testNumberValidator() {
-        Validator v = new Validator();
-        NumberSchema schema = v.number();
-
-        assertThat(schema.isValid(5)).isTrue();
-        assertThat(schema.isValid(null)).isTrue();
-
-        assertThat(schema.positive().isValid(null)).isTrue();
-
-        schema.required();
-        assertThat(schema.isValid(null)).isFalse();
-        assertThat(schema.isValid("5")).isFalse();
-        assertThat(schema.isValid(-10)).isFalse();
-        assertThat(schema.isValid(0)).isFalse();
-        assertThat(schema.isValid(10)).isTrue();
-
-        schema.range(5, 10);
-        assertThat(schema.isValid(5)).isTrue();
-        assertThat(schema.isValid(10)).isTrue();
-        assertThat(schema.isValid(4)).isFalse();
-        assertThat(schema.isValid(11)).isFalse();
-
-        schema.range(6, 9);
-        assertThat(schema.isValid(5)).isFalse();
-        assertThat(schema.isValid(10)).isFalse();
+        assertThat(schema.isValid(human4)).isFalse();
     }
 }

@@ -13,7 +13,12 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema sizeof(int number) {
-        addCheck("sizeof", value -> value instanceof Map map && map.size() == number);
+        addCheck("sizeof", value -> {
+            if (value instanceof Map) {
+                return ((Map) value).size() == number;
+            }
+            return true;
+        });
         return this;
     }
 

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema {
-    protected boolean required = false;
     protected final Map<String, Predicate<Object>> checks;
 
     protected BaseSchema() {
@@ -17,9 +16,6 @@ public abstract class BaseSchema {
     }
 
     public final boolean isValid(Object object) {
-        if (checks.containsKey("required")) {
-            return checks.values().stream().allMatch(check -> check.test(object));
-        }
-        return true;
+        return checks.values().stream().allMatch(check -> check.test(object));
     }
 }

@@ -11,12 +11,22 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema positive() {
-        addCheck("positive", value -> value instanceof Integer integer && integer > 0);
+        addCheck("positive", value -> {
+            if (value instanceof Integer) {
+                return (int) value > 0;
+            }
+            return true;
+        });
         return this;
     }
 
     public NumberSchema range(int begin, int end) {
-        addCheck("range", value -> value instanceof Integer integer && integer >= begin && integer <= end);
+        addCheck("range", value -> {
+            if (value instanceof Integer) {
+                return (int) value >= begin && (int) value <= end;
+            }
+            return true;
+        });
         return this;
     }
 }

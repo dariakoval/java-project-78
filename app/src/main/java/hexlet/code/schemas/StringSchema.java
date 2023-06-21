@@ -11,12 +11,22 @@ public final class StringSchema extends BaseSchema {
     }
 
     public StringSchema minLength(int number) {
-        addCheck("minLength", value -> value instanceof String string && string.length() >= number);
+        addCheck("minLength", value -> {
+            if (value instanceof String) {
+                return ((String) value).length() >= number;
+            }
+            return true;
+        });
         return this;
     }
 
     public StringSchema contains(String substring) {
-        addCheck("contains", value -> value instanceof String string && string.contains(substring));
+        addCheck("contains", value -> {
+            if (value instanceof String) {
+                return ((String) value).contains(substring);
+            }
+            return true;
+        });
         return this;
     }
 }
