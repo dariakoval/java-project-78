@@ -3,18 +3,17 @@ package hexlet.code.schemas;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
-//    public MapSchema() {
-//        addCheck("instanceCheck", value -> value instanceof Map);
-//    }
+    public MapSchema() {
+        super();
+    }
 
     public MapSchema required() {
         addCheck("required", value -> value instanceof Map);
-        required = true;
         return this;
     }
 
     public MapSchema sizeof(int number) {
-        addCheck("sizeof", value -> ((Map) value).size() == number);
+        addCheck("sizeof", value -> value instanceof Map map && map.size() == number);
         return this;
     }
 

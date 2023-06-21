@@ -16,15 +16,9 @@ public abstract class BaseSchema {
         checks.put(name, check);
     }
 
-    public final boolean isValid(Object value) {
-        if (!required && value == null) {
-            return true;
-        }
-
-        for (Predicate<Object> validate : checks.values()) {
-            if (!validate.test(value)) {
-                return false;
-            }
+    public final boolean isValid(Object object) {
+        if (checks.containsKey("required")) {
+            return checks.values().stream().allMatch(check -> check.test(object));
         }
         return true;
     }
