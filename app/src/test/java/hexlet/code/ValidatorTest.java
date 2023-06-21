@@ -28,8 +28,10 @@ public class ValidatorTest {
         StringSchema schema2 = v2.string();
         assertThat(schema2.isValid("")).isTrue();
         assertThat(schema2.isValid(null)).isTrue();
+
         schema2.minLength(3);
         assertThat(schema2.isValid("")).isFalse();
+        assertThat(schema2.isValid(9)).isTrue();
 
         Validator v3 = new Validator();
         StringSchema schema3 = v3.string();
@@ -39,7 +41,6 @@ public class ValidatorTest {
         assertThat(schema3.isValid("")).isFalse();
         assertThat(schema3.isValid(null)).isFalse();
         assertThat(schema3.isValid(5)).isFalse();
-
 
         schema3.minLength(10);
         assertThat(schema3.isValid("hexlet")).isFalse();
