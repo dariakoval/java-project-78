@@ -3,11 +3,12 @@ package hexlet.code.schemas;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
-    public MapSchema() {
-        addCheck("instanceCheck", value -> value instanceof Map);
-    }
+//    public MapSchema() {
+//        addCheck("instanceCheck", value -> value instanceof Map);
+//    }
 
     public MapSchema required() {
+        addCheck("required", value -> value instanceof Map);
         required = true;
         return this;
     }

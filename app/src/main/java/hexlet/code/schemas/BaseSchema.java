@@ -20,22 +20,12 @@ public abstract class BaseSchema {
         if (!required && value == null) {
             return true;
         }
-//
-//        if (!required) {
-//            return checks.values().stream().anyMatch(check -> check.test(value));
-//        }
 
-        return checks.values().stream().allMatch(check -> check.test(value));
-
-//        for (Predicate<Object> check: checks.values()) {
-//            if (!required && check.test(value)) {
-//                return true;
-//            }
-//            if (!check.test(value)) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
+        for (Predicate<Object> validate : checks.values()) {
+            if (!validate.test(value)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

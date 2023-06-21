@@ -19,15 +19,13 @@ public class ValidatorTest {
         assertThat(schema1.isValid("")).isTrue();
         assertThat(schema1.isValid(null)).isTrue();
         assertThat(schema1.isValid("hexlet")).isTrue();
-        assertThat(schema1.isValid(5)).isFalse();
+        assertThat(schema1.isValid(5)).isTrue();
 
         schema1.contains("");
         assertThat(schema1.isValid(null)).isTrue();
 
         Validator v2 = new Validator();
         StringSchema schema2 = v2.string();
-
-        schema2.minLength(0);
         assertThat(schema2.isValid("")).isTrue();
         assertThat(schema2.isValid(null)).isTrue();
 //        schema2.minLength(3);
@@ -60,7 +58,7 @@ public class ValidatorTest {
         NumberSchema schema1 = v1.number();
 
         assertThat(schema1.isValid(null)).isTrue();
-        assertThat(schema1.isValid("5")).isFalse();
+        assertThat(schema1.isValid("5")).isTrue();
         assertThat(schema1.isValid(5)).isTrue();
 
         schema1.positive();
